@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/ernestgwilsonii/aws-serverless-example/issues"
   },
-  "homepage": "https://github.com/ernestgwilsonii/aws-serverless-example#readme"
+  "homepage": "https://github.com/ernestgwilsonii/aws-serverless-example#readme",
+  "dependencies": {
+    "serverless": "^1.35.0"
+  }
 }
