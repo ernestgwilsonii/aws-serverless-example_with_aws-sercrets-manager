@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/ernestgwilsonii/aws-serverless-example#readme",
   "dependencies": {
+    "aws-sdk": "^2.378.0",
     "serverless": "^1.35.0"
   }
 }
