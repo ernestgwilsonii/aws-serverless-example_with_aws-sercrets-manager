@@ -1,5 +1,5 @@
-# aws-serverless-example
-AWS Serverless aka Functions-as-a-Service using Lambda and API Gateway
+# aws-serverless-example_with_aws-sercrets-manager
+AWS Serverless (aka Functions-as-a-Service) using Lambda and API Gateway and AWS Secrets Manager
 
 ### REF: Serverless Framework -  https://serverless.com/framework/docs/
 ### REF: Create AWS credentials - https://serverless.com/framework/docs/providers/aws/guide/credentials/
