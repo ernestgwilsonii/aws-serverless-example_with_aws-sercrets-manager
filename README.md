@@ -8,7 +8,7 @@ AWS Serverless (aka Functions-as-a-Service) using Lambda and API Gateway and AWS
 ### REF: https://www.youtube.com/watch?v=xF1Ko2_oLxc
 
 ## Install Serverless CLI globally
-### ```sudo npm install -g serverless```
+### ```npm install -g serverless```
 
 ## Define your AWS (IAM) credentials
 ### ```export AWS_ACCESS_KEY_ID=blah```
