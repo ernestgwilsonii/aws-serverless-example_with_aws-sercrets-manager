@@ -2,50 +2,64 @@
 AWS Serverless (aka Functions-as-a-Service) using Lambda and API Gateway and AWS Secrets Manager
 
 ##### REF: Serverless Framework -  https://serverless.com/framework/docs/
-##### REF: Create AWS credentials - https://serverless.com/framework/docs/providers/aws/guide/credentials/
+
 ## Helpful videos:
 ##### REF: https://www.youtube.com/watch?v=71cd5XerKss
 ##### REF: https://www.youtube.com/watch?v=xF1Ko2_oLxc
 
-## Install Serverless CLI globally
-```
-sudo npm install -g serverless
-```
+## Prerequisites
 
-## Define your AWS (IAM) credentials
+##### A.) Functional AWS CLI (likely an administrative account with API access)
+##### REF: https://aws.amazon.com/cli/
+##### Note: Creating AWS credentials - https://serverless.com/framework/docs/providers/aws/guide/credentials/
 ```
-export AWS_ACCESS_KEY_ID=blah
-export AWS_SECRET_ACCESS_KEY=blahblah
-serverless deploy
-```
-**or**
-```
-serverless config credentials --provider aws --key blah --secret blahblah
-```
-**or**
-```
+pip install awscli
+aws --version
 aws configure
+aws iam get-user
 ```
 
-## Edit secrets.json and run command (in secrets.txt) (once)
+##### B.) Install Serverless CLI
+##### REF: https://serverless.com/framework/docs/providers/aws/guide/installation/
 ```
-aws secretsmanager create-secret --name frcSlackNotifierSecrets --description "FRC Slack Notifier secrets created with the CLI" --secret-string file://secrets.json
+npm install -g serverless
+serverless --version
+serverless
+# Optional: Set your "serverless" creds differently or override your "AWS CLI" creds
+# serverless config credentials --provider aws --key blah --secret blahblah
 ```
 
-## Define this specific project type (once)
+
+## Deploy
+
+##### 1.) Edit the configuration for your specific deployment secrets and upload to AWS
+```
+# Edit file and set your specific values
+vi secrets.json
+
+# Create and upload your secrets to AWS Secrets Manager
+aws secretsmanager --region us-east-1 create-secret --name frcSlackNotifierSecrets \
+    --description "FRC Slack Notifier secrets created with the CLI" \
+    --secret-string file://secrets.json
+
+# Verify
+aws secretsmanager --region us-east-1 get-secret-value --secret-id frcSlackNotifierSecrets
+```
+
+##### 2.) Create AWS Policies and Roles (specific to this function)
+```
+aws TBD/WIP
+```
+
+##### 3.) Define this specific project type (once)
 ```
 serverless create -t aws-nodejs
 ```
 
-## Deploy
+##### 4.) Deploy the AWS Lambda (Serverless functions)
 ```
 serverless deploy
-```
-**or**
-```
-serverless deploy --stage dev
-```
-**or**
-```
-serverless deploy --stage prod
+# Optionally you may specify a stage if desired:
+#serverless deploy --stage dev
+#serverless deploy --stage prod
 ```
