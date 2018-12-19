@@ -37,6 +37,9 @@ serverless
 # Edit file and set your specific values
 vi secrets.json
 
+# Edit serverless.yml and set your account number on line 8
+vi +8 serverless.yml
+
 # Create and upload your secrets to AWS Secrets Manager
 aws secretsmanager --region us-east-1 create-secret --name frcSlackNotifierSecrets \
     --description "FRC Slack Notifier secrets created with the CLI" \
@@ -46,17 +49,12 @@ aws secretsmanager --region us-east-1 create-secret --name frcSlackNotifierSecre
 aws secretsmanager --region us-east-1 get-secret-value --secret-id frcSlackNotifierSecrets
 ```
 
-##### 2.) Create AWS Policies and Roles (specific to this function)
-```
-aws TBD/WIP
-```
-
-##### 3.) Define this specific project type (once)
+##### 2.) Define this specific project type (once)
 ```
 serverless create -t aws-nodejs
 ```
 
-##### 4.) Deploy the AWS Lambda (Serverless functions)
+##### 3.) Deploy the AWS Lambda (Serverless functions)
 ```
 serverless deploy
 # Optionally you may specify a stage if desired:
