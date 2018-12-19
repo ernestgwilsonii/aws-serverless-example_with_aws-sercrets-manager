@@ -37,9 +37,6 @@ serverless
 # Edit file and set your specific values
 vi secrets.json
 
-# Edit serverless.yml and set your account number on line 8
-vi +8 serverless.yml
-
 # Create and upload your secrets to AWS Secrets Manager
 aws secretsmanager --region us-east-1 create-secret --name frcSlackNotifierSecrets \
     --description "FRC Slack Notifier secrets created with the CLI" \

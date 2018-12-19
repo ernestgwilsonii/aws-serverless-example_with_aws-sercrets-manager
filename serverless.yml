@@ -1,12 +1,45 @@
 service: frcTeamUpdateSlackNotifier
-
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: prod
+  stage: dev
   region: us-east-1
-  role: arn:aws:iam::XXXXXXXXXXXX:role/teamUpdateSlackNotifierRole # <--hard coded, set to your account
-
+  iamRoleStatements:
+    - Action:
+      - secretsmanager:*
+      - cloudformation:CreateChangeSet
+      - cloudformation:DescribeChangeSet
+      - cloudformation:DescribeStackResource
+      - cloudformation:DescribeStacks
+      - cloudformation:ExecuteChangeSet
+      - ec2:DescribeSecurityGroups
+      - ec2:DescribeSubnets
+      - ec2:DescribeVpcs
+      - kms:DescribeKey
+      - kms:ListAliases
+      - kms:ListKeys
+      - lambda:ListFunctions
+      - rds:DescribeDBClusters
+      - rds:DescribeDBInstances
+      - tag:GetResources
+      Effect: Allow
+      Resource: "*"
+    - Action:
+      - lambda:AddPermission
+      - lambda:CreateFunction
+      - lambda:GetFunction
+      - lambda:InvokeFunction
+      - lambda:UpdateFunctionConfiguration
+      Effect: Allow
+      Resource: arn:aws:lambda:*:*:function:SecretsManager*
+    - Action:
+      - serverlessrepo:CreateCloudFormationChangeSet
+      Effect: Allow
+      Resource: arn:aws:serverlessrepo:*:*:applications/SecretsManager*
+    - Action:
+      - s3:GetObject
+      Effect: Allow
+      Resource: arn:aws:s3:::awsserverlessrepo-changesets*
 functions:
   hello:
     handler: handler.hello
@@ -19,23 +52,4 @@ functions:
     events:
       - http:
           path: /goodbye
-          method: get  
-
-resources:
-  Resources:
-    myDefaultRole:
-      Type: AWS::IAM::Role
-      Properties:
-        Path: /
-        RoleName: teamUpdateSlackNotifierRole 
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service:
-                  - lambda.amazonaws.com
-              Action: sts:AssumeRole
-        ManagedPolicyArns:
-          - arn:aws:iam::aws:policy/AWSLambdaExecute
-          - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+          method: get
